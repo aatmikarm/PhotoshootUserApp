@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="activity.post">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postll1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/post_back_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_backicon"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postcl1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postll1">
+
+
+        <RelativeLayout
+            android:id="@+id/rl1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/circle_boder"
+            android:padding="1dp"
+            app:layout_constraintStart_toStartOf="@+id/postcl1"
+            app:layout_constraintTop_toTopOf="@+id/postcl1">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_profile_cardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/circle_boder"
+                app:cardCornerRadius="50dp">
+
+                <ImageView
+                    android:id="@+id/post_profile_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_userdp" />
+
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/post_profile_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:ellipsize="end"
+            android:ems="7"
+            android:maxLines="1"
+            android:text="User Name"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/rl1"
+            app:layout_constraintStart_toEndOf="@+id/rl1"
+            app:layout_constraintTop_toTopOf="@+id/rl1" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="2dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@+id/postcl1" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postcl2"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:layout_constraintBottom_toTopOf="@+id/postcl3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider1">
+
+        <ImageView
+            android:id="@+id/post_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:src="@drawable/ic_userdp"
+            app:layout_constraintBottom_toBottomOf="@+id/postcl2"
+            app:layout_constraintEnd_toEndOf="@+id/postcl2"
+            app:layout_constraintStart_toStartOf="@+id/postcl2"
+            app:layout_constraintTop_toTopOf="@+id/postcl2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@+id/postcl2" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postcl3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="0dp"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider3">
+
+        <ImageView
+            android:id="@+id/post_heart"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_heartoff"
+            app:layout_constraintBottom_toBottomOf="@+id/postcl3"
+            app:layout_constraintStart_toStartOf="@+id/postcl3"
+            app:layout_constraintTop_toTopOf="@+id/postcl3" />
+
+        <ImageView
+            android:id="@+id/post_comment"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="22dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_comment"
+            app:layout_constraintBottom_toBottomOf="@+id/postcl3"
+            app:layout_constraintStart_toEndOf="@+id/post_heart"
+            app:layout_constraintTop_toTopOf="@+id/postcl3" />
+
+
+
+        <ImageView
+            android:id="@+id/post_share"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/postcl3"
+            app:layout_constraintEnd_toEndOf="@+id/postcl3"
+            app:layout_constraintTop_toTopOf="@+id/postcl3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postcl4"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:layout_constraintTop_toBottomOf="@+id/postcl3">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/myCardView2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="22dp"
+            app:cardCornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="@+id/postcl4"
+            app:layout_constraintTop_toTopOf="@+id/postcl4"
+            app:layout_constraintStart_toStartOf="@+id/postcl4"
+            android:background="@drawable/circle_boder">
+
+            <ImageView
+                android:id="@+id/post_profile_image_on_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_userdp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liked by "
+            android:textSize="12sp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/myCardView2"
+            app:layout_constraintTop_toTopOf="@+id/myCardView2"
+            app:layout_constraintBottom_toBottomOf="@+id/myCardView2"/>
+
+        <TextView
+            android:id="@+id/liked_by_number_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="188"
+            android:textStyle="bold"
+            android:textColor="#000"
+            app:layout_constraintStart_toEndOf="@+id/tv9"
+            app:layout_constraintTop_toTopOf="@+id/myCardView2"
+            app:layout_constraintBottom_toBottomOf="@+id/myCardView2"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
