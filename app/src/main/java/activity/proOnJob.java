@@ -1,13 +1,5 @@
 package activity;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +11,6 @@ import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +19,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.test1photographerapp.R;
@@ -57,26 +55,27 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class proOnJob extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-
     User currentUser;
-
+    private Button makePaymentBtn;
     private FirebaseFirestore mDb;
     private FirebaseAuth firebaseAuth;
+    private StorageReference mStorageRef;
+
+    String selectedProName, selectedProPic, selectedProUid, selectedProShootBookedTime, selectedProPhone, selectedProDistance, selectedProShootStatus;
+    ImageView proOnJob_profile_img, proOnJob_backBtn;
+    TextView proOnJob_proName, arrival_time, proDistance, order_placed_time, on_the_way, photoshoot_start_time, pics_recived_time;
+    CardView callBtn, shootStatusIndicator_shootBooked, shootStatusIndicator_onTheWay, shootStatusIndicator_photoshootOngoing, shootStatusIndicator_picturesReceived;
+    TextView shootStatusIndicator_shootBooked_TV, shootStatusIndicator_onTheWay_TV, shootStatusIndicator_photoshootOngoing_TV, shootStatusIndicator_picturesReceived_TV;
+
+
     private GoogleMap mMap;
     private FusedLocationProviderClient mfusedLocationProviderClient;
     private LatLngBounds mMapBoundary;
-    private StorageReference mStorageRef;
-
-    String selectedProName, selectedProPic, selectedProUid, selectedProShootBookedTime, selectedProPhone,selectedProDistance,selectedProShootStatus;
-
-    ImageView proOnJob_profile_img,proOnJob_backBtn;
-    TextView proOnJob_proName, arrival_time, proDistance, order_placed_time, on_the_way, photoshoot_start_time, pics_recived_time;
-    private Button makePaymentBtn;
-    CardView callBtn,shootStatusIndicator_shootBooked ,shootStatusIndicator_onTheWay ,shootStatusIndicator_photoshootOngoing ,shootStatusIndicator_picturesReceived;
-    TextView shootStatusIndicator_shootBooked_TV ,shootStatusIndicator_onTheWay_TV ,shootStatusIndicator_photoshootOngoing_TV ,shootStatusIndicator_picturesReceived_TV;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
 
     @Override
@@ -85,19 +84,19 @@ public class proOnJob extends AppCompatActivity implements OnMapReadyCallback {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_pro_on_job);
 
-        mfusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         firebaseAuth = FirebaseAuth.getInstance();
         mDb = FirebaseFirestore.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        mfusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         makePaymentBtn = findViewById(R.id.ratingBtn);
         callBtn = findViewById(R.id.proOnJob_callBtn);
         proOnJob_profile_img = findViewById(R.id.proOnJob_profile_img);
         proOnJob_proName = findViewById(R.id.proOrder_proStatus);
-        proDistance =  findViewById(R.id.proDistance);
+        proDistance = findViewById(R.id.proDistance);
         arrival_time = findViewById(R.id.arrival_time);
         order_placed_time = findViewById(R.id.order_placed_time);
-        on_the_way =  findViewById(R.id.on_the_way);
+        on_the_way = findViewById(R.id.on_the_way);
         photoshoot_start_time = findViewById(R.id.photoshoot_start_time);
         pics_recived_time = findViewById(R.id.pics_recived_time);
         proOnJob_backBtn = findViewById(R.id.proOnJob_backBtn);
@@ -108,8 +107,8 @@ public class proOnJob extends AppCompatActivity implements OnMapReadyCallback {
         shootStatusIndicator_photoshootOngoing_TV = findViewById(R.id.shootStatusIndicator_photoshootOngoing_TV);
         shootStatusIndicator_picturesReceived_TV = findViewById(R.id.shootStatusIndicator_picturesReceived_TV);
 
-        shootStatusIndicator_shootBooked= findViewById(R.id.shootStatusIndicator_shootBooked);
-        shootStatusIndicator_onTheWay= findViewById(R.id.shootStatusIndicator_onTheWay);
+        shootStatusIndicator_shootBooked = findViewById(R.id.shootStatusIndicator_shootBooked);
+        shootStatusIndicator_onTheWay = findViewById(R.id.shootStatusIndicator_onTheWay);
         shootStatusIndicator_photoshootOngoing = findViewById(R.id.shootStatusIndicator_photoshootOngoing);
         shootStatusIndicator_picturesReceived = findViewById(R.id.shootStatusIndicator_picturesReceived);
 
@@ -136,7 +135,7 @@ public class proOnJob extends AppCompatActivity implements OnMapReadyCallback {
         proOnJob_backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =  new Intent(proOnJob.this,MainActivity.class);
+                Intent intent = new Intent(proOnJob.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -153,11 +152,10 @@ public class proOnJob extends AppCompatActivity implements OnMapReadyCallback {
     }
 
 
-
     @Override
     public void onBackPressed() {
 
-        Intent intent =  new Intent(proOnJob.this,MainActivity.class);
+        Intent intent = new Intent(proOnJob.this, MainActivity.class);
         startActivity(intent);
 
         finish();
@@ -196,16 +194,16 @@ public class proOnJob extends AppCompatActivity implements OnMapReadyCallback {
 
         double distanceInKilometers = Double.parseDouble(selectedProDistance);
         //if distance is less then 1 km then convert to meters
-        if (distanceInKilometers<1){
+        if (distanceInKilometers < 1) {
             DecimalFormat precision = new DecimalFormat("0");
             // dblVariable is a number variable and not a String in this case
-            proDistance.setText(precision.format(distanceInKilometers*1000)+" m");
+            proDistance.setText(precision.format(distanceInKilometers * 1000) + " m");
             //Toast.makeText(proOnJob.this, "distance in meters = "+precision.format(distanceInKilometers*1000)+" m", Toast.LENGTH_SHORT).show();
 
-        }else if (distanceInKilometers>=1){
+        } else if (distanceInKilometers >= 1) {
             DecimalFormat precision = new DecimalFormat("0.00");
             // dblVariable is a number variable and not a String in this case
-            proDistance.setText(precision.format(distanceInKilometers)+" km");
+            proDistance.setText(precision.format(distanceInKilometers) + " km");
         }
     }
 

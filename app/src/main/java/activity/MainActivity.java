@@ -136,7 +136,7 @@ public class MainActivity extends FragmentActivity implements GoogleMap.OnMarker
 
 
         //most imp lines below to add a fragment in your app screens
-        //for pro details fragmet on main screen
+        //for pro details fragment on main screen
         proDetailFragmentManager = getSupportFragmentManager();
         //fragmentManager.beginTransaction().replace(R.id.pro_profile_Detail_frag_container, new proFullDeatilFrag()).addToBackStack(null).commit();
 
